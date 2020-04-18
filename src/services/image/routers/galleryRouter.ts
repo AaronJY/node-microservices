@@ -40,7 +40,7 @@ router.put('/', (req: Request, resp: Response, next: NextFunction) => {
     });
 
     GalleryModel.create(galleryModel)
-        .then(() => resp.status(201).send())
+        .then((gallery: Gallery) => resp.status(201).send(new GalleryApiModel(gallery)))
         .catch(err => next(err));
 });
 
