@@ -5,7 +5,7 @@ import { NewGalleryApiModel } from "../api-models/newGalleryApiModel";
 import express from "express";
 import { ObjectID } from "mongodb";
 import { GalleryNotFoundError } from "../errors/galleryNotFoundError";
-import { PatchResult, Operation, applyPatch, Validator, validate, JsonPatchError } from "fast-json-patch";
+import { Operation, applyPatch, Validator, validate, JsonPatchError } from "fast-json-patch";
 
 const router: Router = express.Router();
 
