@@ -6,6 +6,7 @@ import express from "express";
 import { ObjectID } from "mongodb";
 import { NotImplementedError } from "../../../common/errors/notImplementedError";
 import { NotFoundError } from "../../../common/errors/notFoundError";
+import { GalleryNotFoundError } from "../errors/galleryNotFoundError";
 
 const router: Router = express.Router();
 
@@ -44,7 +45,16 @@ router.put('/', (req: Request, resp: Response, next: NextFunction) => {
 });
 
 router.delete('/:id', async (req: Request, resp: Response, next: NextFunction) => {
-    throw new NotImplementedError();
+    const id = new ObjectID(req.params.id);
+
+    GalleryModel.exists({ _id: id })
+        .then(exists => {
+            if (!exists)
+                throw new GalleryNotFoundError(id);
+        })
+        .then(() => GalleryModel.deleteOne({ _id: id }))
+        .then(() => resp.status(204).send())
+        .catch((err: Error) => next(err))
 });
 
 router.patch('/:id', async (req: Request, resp: Response, next: NextFunction) => {

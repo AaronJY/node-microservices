@@ -1,6 +1,7 @@
 import { Gallery } from "../models/galleryModel";
 
 export class GalleryApiModel {
+    id: Gallery['id'];
     name: Gallery['name'];
     profileId: Gallery['profileId'];
     visibility: Gallery['visibility'];
@@ -8,6 +9,7 @@ export class GalleryApiModel {
     imageCount: number;
 
     constructor(galleryModel: Gallery) {
+        this.id = galleryModel.id;
         this.name = galleryModel.name;
         this.profileId = galleryModel.profileId;
         this.visibility = galleryModel.visibility;
