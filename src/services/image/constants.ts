@@ -1,0 +1,1 @@
+export const ImageDatabase: string = "image";

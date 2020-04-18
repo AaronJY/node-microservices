@@ -1,0 +1,19 @@
+import mongoose, { Schema, Document } from "mongoose";
+import { ObjectID } from "mongodb";
+import { GalleryVisibility } from "../../../common/enums/galleryVisibility";
+
+export interface Gallery extends Document {
+    name: string;
+    createDate: Date;
+    profileId: ObjectID;
+    visibility: GalleryVisibility;
+}
+
+const GallerySchema: Schema = new Schema({
+    name: { type: String, required: true },
+    createDate: { type: Date, required: true, default: Date() },
+    profileId: { type: ObjectID, required: true },
+    visibility: { type: GalleryVisibility, required: true, default: GalleryVisibility.Private }
+});
+
+export default mongoose.model<Gallery>('Gallery', GallerySchema);
