@@ -17,7 +17,8 @@
                 "${workspaceFolder}/dist/**/*.js"
             ],
             "env": {
-                "NODE_ENV": "development"
+                "NODE_ENV": "development",
+                "IMAGE_DB_CONNECTION": "mongodb://localhost:27017/image"
             }
         }
     ]

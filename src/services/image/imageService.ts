@@ -15,10 +15,12 @@ export class ImageService {
     }
 
     start(port: number) {
-        console.log(`Connecting to MongoDB instance`);
-        mongoose.connect("mongodb://localhost:27017/image", { useNewUrlParser: true });
+        console.log(`Connecting to MongoDB with connection string ${process.env.IMAGE_DB_CONNECTION}`);
+        mongoose.connect(process.env.IMAGE_DB_CONNECTION, { useNewUrlParser: true });
 
         console.log(`Starting Image service on port ${port}`);
-        this.api.listen(port);
+        this.api.listen(port, () => {
+            console.log('Listening...');
+        });
     }
 }
