@@ -1,5 +1,5 @@
-import { NotFoundError } from "../../../common/errors/notFoundError";
-import { ObjectID } from "mongodb";
+import { NotFoundError } from '../../../common/errors/notFoundError';
+import { ObjectID } from 'mongodb';
 
 export class GalleryNotFoundError extends NotFoundError {
     galleryId: ObjectID;

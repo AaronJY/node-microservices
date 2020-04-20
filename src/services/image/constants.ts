@@ -1,1 +1,1 @@
-export const ImageDatabase: string = "image";
+export const ImageDatabase = 'image';

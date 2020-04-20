@@ -1,4 +1,4 @@
-import { ImageService } from "./services/image/imageService";
+import { ImageService } from './services/image/imageService';
 
 const imageService: ImageService = new ImageService();
 

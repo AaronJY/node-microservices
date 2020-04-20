@@ -1,11 +1,10 @@
-import { Response, Request, Router, NextFunction } from "express";
-import GalleryModel, { Gallery } from "../models/galleryModel";
-import { GalleryApiModel } from "../api-models/galleryApiModel";
-import { NewGalleryApiModel } from "../api-models/newGalleryApiModel";
-import express from "express";
-import { ObjectID } from "mongodb";
-import { GalleryNotFoundError } from "../errors/galleryNotFoundError";
-import { Operation, applyPatch, Validator, validate, JsonPatchError } from "fast-json-patch";
+import express, { Response, Request, Router, NextFunction } from 'express';
+import GalleryModel, { Gallery } from '../models/galleryModel';
+import { GalleryApiModel } from '../api-models/galleryApiModel';
+import { NewGalleryApiModel } from '../api-models/newGalleryApiModel';
+import { ObjectID } from 'mongodb';
+import { GalleryNotFoundError } from '../errors/galleryNotFoundError';
+import { Operation, applyPatch, Validator, validate, JsonPatchError } from 'fast-json-patch';
 
 const router: Router = express.Router();
 
@@ -23,7 +22,7 @@ router.get('/:id', (req: Request, resp: Response, next: NextFunction) => {
             if (gallery === null) {
                 throw new GalleryNotFoundError(id);
             }
-            
+
             return gallery;
         })
         .then((gallery: Gallery) => resp.send(new GalleryApiModel(gallery)))
@@ -64,9 +63,11 @@ router.patch('/:id', async (req: Request, resp: Response, next: NextFunction) =>
 
     // NOTE: While this validator validates whether given paths exist or are valid, it doesn't
     // validate the operations against the path. Because of this, consumers will be able to run
-    // operations against paths that shouldn't be allowed (remove against /name, for example) and 
+    // operations against paths that shouldn't be allowed (remove against /name, for example) and
     // the API won't respond telling them they're not allowed. Thankfully, any attempt to change
     // the document beyond what the DB allows will result in a ValidationError from mongoose.
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const galleryPatchDocumentValidator: Validator<Gallery> = (operation: Operation, index: number, document: Gallery, existingPathFragment: string) => {
         // Firstly, use the built-in validator to validate things like
         // whether the given paths exist
@@ -76,10 +77,9 @@ router.patch('/:id', async (req: Request, resp: Response, next: NextFunction) =>
         }
 
         // Then, ensure only set paths are being validated
-        switch (operation.path)
-        {
-            case "/name":
-            case "/visibility":
+        switch (operation.path) {
+            case '/name':
+            case '/visibility':
                 break;
 
             default:
