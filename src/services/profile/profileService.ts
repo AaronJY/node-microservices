@@ -1,13 +1,10 @@
 import express from 'express';
-import GalleryRouter from './routers/galleryRouter';
 import mongoose from 'mongoose';
-import clientErrorHandler from '../../common/api/error-handlers/clientErrorHandler';
-import bodyparser from 'body-parser';
-import swaggerUI from 'swagger-ui-express';
-import swaggerDoc from './swagger.json';
 import { ServiceConfig } from './config/serviceConfig';
+import bodyparser from 'body-parser';
+import clientErrorHandler from '../../common/api/error-handlers/clientErrorHandler';
 
-export class ImageService {
+export class ProfileService {
     private api: express.Express;
     private config: ServiceConfig;
 
@@ -20,19 +17,17 @@ export class ImageService {
 
         this.api = express();
         this.api.use(bodyparser.json());
-        this.api.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
-        this.api.use('/api/v1/gallery', GalleryRouter);
         this.api.use(clientErrorHandler);
     }
 
     start(): void {
         console.log(`Connecting to MongoDB with connection string ${this.config.dbConnectionString}`);
-        mongoose.connect(process.env.IMAGE_DB_CONNECTION, {
+        mongoose.connect(this.config.dbConnectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         } as mongoose.ConnectionOptions);
 
-        console.log(`Starting Image service on port ${this.config.apiHttpPort}`);
+        console.log(`Starting Profile service on port ${this.config.apiHttpPort}`);
         this.api.listen(this.config.apiHttpPort, () => {
             console.log('Listening...');
         });
