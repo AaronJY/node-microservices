@@ -7,6 +7,7 @@ export class GalleryNotFoundError extends NotFoundError {
     constructor(galleryId: ObjectID, message?: string) {
         super(message);
 
+        this.name = 'GalleryNotFound';
         this.galleryId = galleryId;
     }
 }

@@ -2,7 +2,9 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { ServiceConfig } from './config/serviceConfig';
 import bodyparser from 'body-parser';
-import clientErrorHandler from '../../common/api/error-handlers/clientErrorHandler';
+import errorResponseCodeHandler from '../../common/api/error-handlers/clientErrorHandler';
+import ProfileRouter from '../profile/routers/profileRouter';
+import errorResponseHandler from '../../common/api/error-handlers/errorReportingHandler';
 
 export class ProfileService {
     private api: express.Express;
@@ -17,19 +19,21 @@ export class ProfileService {
 
         this.api = express();
         this.api.use(bodyparser.json());
-        this.api.use(clientErrorHandler);
+        this.api.use('/api/v1/profile', ProfileRouter);
+        this.api.use(errorResponseCodeHandler);
+        this.api.use(errorResponseHandler);
     }
 
-    start(): void {
-        console.log(`Connecting to MongoDB with connection string ${this.config.dbConnectionString}`);
-        mongoose.connect(this.config.dbConnectionString, {
+    async start(): Promise<void> {
+        await mongoose.connect(this.config.dbConnectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true
-        } as mongoose.ConnectionOptions);
+        }).then(() =>
+            console.log(`Connected to MongoDB @ ${this.config.dbConnectionString}`)
+        );
 
-        console.log(`Starting Profile service on port ${this.config.apiHttpPort}`);
         this.api.listen(this.config.apiHttpPort, () => {
-            console.log('Listening...');
+            console.log(`Profile service now listening on on port ${this.config.apiHttpPort}`);
         });
     }
 }
