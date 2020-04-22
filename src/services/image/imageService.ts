@@ -27,16 +27,31 @@ export class ImageService {
         this.api.use(errorResponseHandler);
     }
 
-    start(): void {
-        mongoose.connect(process.env.IMAGE_DB_CONNECTION, {
+    async start(): Promise<void> {
+        return this.connectToDatabase()
+            .then(() => this.registerDbSchmas())
+            .then(() => {
+                return new Promise((resolve) => {
+                    this.api.listen(this.config.apiHttpPort, () => {
+                        console.log(`Image service now listening on port ${this.config.apiHttpPort}`);
+                        resolve();
+                    });
+                });
+            });
+    }
+
+    private registerDbSchmas(): void {
+        require('../image/models/galleryModel');
+
+        console.log('Registered DB schemas');
+    }
+
+    private async connectToDatabase(): Promise<void> {
+        await mongoose.connect(this.config.dbConnectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true
-        }).then(() =>
-            console.log(`Connected to MongoDB @ ${this.config.dbConnectionString}`)
-        );
-
-        this.api.listen(this.config.apiHttpPort, () => {
-            console.log(`Image service now listening on port ${this.config.apiHttpPort}`);
         });
+
+        console.log(`Connected to MongoDB @ ${this.config.dbConnectionString}`);
     }
 }

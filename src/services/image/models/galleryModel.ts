@@ -14,6 +14,6 @@ const GallerySchema: Schema = new Schema({
     createDate: { type: Date, required: true, default: Date() },
     profileId: { type: ObjectID, required: true },
     visibility: { type: GalleryVisibility, required: true, default: GalleryVisibility.Private }
-});
+}, { collection: 'galleries' });
 
 export default mongoose.model<Gallery>('Gallery', GallerySchema);

@@ -14,5 +14,5 @@ const profileService: ProfileService = new ProfileService({
 } as profileServiceConfig.ServiceConfig);
 
 console.log('Starting services...');
-imageService.start();
-profileService.start();
+imageService.start().then(() => console.log('Image service started')).catch(err => console.error(err));
+profileService.start().then(() => console.log('Profile service started')).catch(err => console.error(err));

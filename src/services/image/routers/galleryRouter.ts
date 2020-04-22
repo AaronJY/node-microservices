@@ -3,13 +3,13 @@ import GalleryModel, { Gallery } from '../models/galleryModel';
 import { GalleryApiModel } from '../api-models/galleryApiModel';
 import { NewGalleryApiModel } from '../api-models/newGalleryApiModel';
 import { ObjectID } from 'mongodb';
-import { GalleryNotFoundError } from '../errors/galleryNotFoundError';
 import { Operation, applyPatch, Validator, validate, JsonPatchError } from 'fast-json-patch';
+import { GalleryRepo } from '../repos/galleryRepo';
 
 const router: Router = express.Router();
 
 router.get('/', (req: Request, resp: Response, next: NextFunction) => {
-    GalleryModel.find()
+    GalleryRepo.getAll()
         .then((galleries: Gallery[]) => galleries.map(model => new GalleryApiModel(model)))
         .then((apiModels: GalleryApiModel[]) => resp.send(apiModels))
         .catch(err => next(err));
@@ -17,14 +17,8 @@ router.get('/', (req: Request, resp: Response, next: NextFunction) => {
 
 router.get('/:id', (req: Request, resp: Response, next: NextFunction) => {
     const id: ObjectID = new ObjectID(req.params.id);
-    GalleryModel.findById(id)
-        .then((gallery: Gallery) => {
-            if (gallery === null) {
-                throw new GalleryNotFoundError(id);
-            }
 
-            return gallery;
-        })
+    GalleryRepo.getById(id)
         .then((gallery: Gallery) => resp.send(new GalleryApiModel(gallery)))
         .catch(err => next(err));
 });
@@ -32,13 +26,13 @@ router.get('/:id', (req: Request, resp: Response, next: NextFunction) => {
 router.put('/', (req: Request, resp: Response, next: NextFunction) => {
     const newGallery: NewGalleryApiModel = req.body as NewGalleryApiModel;
 
-    const galleryModel = new GalleryModel({
+    const document = new GalleryModel({
         name: newGallery.name,
         profileId: new ObjectID(),
         visibility: newGallery.visibility
     });
 
-    GalleryModel.create(galleryModel)
+   GalleryRepo.insert(document)
         .then((gallery: Gallery) => resp.status(201).send(new GalleryApiModel(gallery)))
         .catch(err => next(err));
 });
@@ -47,12 +41,7 @@ router.delete('/:id', async (req: Request, resp: Response, next: NextFunction) =
     const id = new ObjectID(req.params.id);
 
     GalleryModel.exists({ _id: id })
-        .then(exists => {
-            if (!exists) {
-                throw new GalleryNotFoundError(id);
-            }
-        })
-        .then(() => GalleryModel.deleteOne({ _id: id }))
+        .then(() => GalleryRepo.deleteById(id))
         .then(() => resp.status(204).send())
         .catch((err: Error) => next(err))
 });
@@ -87,14 +76,7 @@ router.patch('/:id', async (req: Request, resp: Response, next: NextFunction) =>
         }
     }
 
-    GalleryModel.findById(id)
-        .then((gallery: Gallery) => {
-            if (gallery === null) {
-                throw new GalleryNotFoundError(id);
-            }
-
-            return gallery;
-        })
+    GalleryRepo.getById(id)
         .then((gallery: Gallery) => applyPatch(gallery, operations, galleryPatchDocumentValidator).newDocument.save())
         .then(() => resp.status(200).send())
         .catch(err => next(err));

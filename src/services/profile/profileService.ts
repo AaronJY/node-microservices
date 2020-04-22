@@ -24,16 +24,32 @@ export class ProfileService {
         this.api.use(errorResponseHandler);
     }
 
-    async start(): Promise<void> {
+    async start(): Promise<unknown> {
+        return this.connectToDatabase()
+            .then(() => this.registerDbSchmas())
+            .then(() => {
+                return new Promise((resolve) => {
+                    this.api.listen(this.config.apiHttpPort, () => {
+                        console.log(`Profile service now listening on on port ${this.config.apiHttpPort}`);
+                        resolve();
+                    });
+                });
+            });
+    }
+
+    private registerDbSchmas(): void {
+        require('../profile/models/addressModel');
+        require('../profile/models/profileModel');
+
+        console.log('Registered DB schemas');
+    }
+
+    private async connectToDatabase(): Promise<void> {
         await mongoose.connect(this.config.dbConnectionString, {
             useNewUrlParser: true,
             useUnifiedTopology: true
-        }).then(() =>
-            console.log(`Connected to MongoDB @ ${this.config.dbConnectionString}`)
-        );
-
-        this.api.listen(this.config.apiHttpPort, () => {
-            console.log(`Profile service now listening on on port ${this.config.apiHttpPort}`);
         });
+
+        console.log(`Connected to MongoDB @ ${this.config.dbConnectionString}`);
     }
 }
