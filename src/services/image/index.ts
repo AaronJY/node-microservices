@@ -1,5 +1,5 @@
 import express from 'express';
-import GalleryRouter from './routers/galleryRouter';
+import GalleryRouter from './api/routers/galleryRouter';
 import mongoose from 'mongoose';
 import errorResponseCodeHandler from '../../common/api/error-handlers/clientErrorHandler';
 import bodyparser from 'body-parser';

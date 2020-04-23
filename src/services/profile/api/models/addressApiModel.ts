@@ -1,4 +1,4 @@
-import { Address } from '../models/addressModel';
+import { Address } from '../../data/models/addressModel';
 
 export class AddressApiModel {
     addressLine1: Address['addressLine1'];

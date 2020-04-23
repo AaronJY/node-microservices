@@ -1,6 +1,6 @@
-import { Profile } from '../models/profileModel';
-import { Address } from '../models/addressModel';
 import { AddressApiModel } from './addressApiModel';
+import { Profile } from '../../data/models/profileModel';
+import { Address } from '../../data/models/addressModel';
 
 export class ProfileApiModel {
     name: Profile['name'];

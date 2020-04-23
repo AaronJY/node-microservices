@@ -3,8 +3,9 @@ import mongoose from 'mongoose';
 import { ServiceConfig } from './config/serviceConfig';
 import bodyparser from 'body-parser';
 import errorResponseCodeHandler from '../../common/api/error-handlers/clientErrorHandler';
-import ProfileRouter from '../profile/routers/profileRouter';
+import ProfileRouter from './api/routers/profileRouter';
 import errorResponseHandler from '../../common/api/error-handlers/errorReportingHandler';
+import { ConnectionManager } from './data/connections';
 
 export class ProfileService {
     private api: express.Express;
@@ -49,6 +50,8 @@ export class ProfileService {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
+
+        await ConnectionManager.connect(this.config.dbConnectionString);
 
         console.log(`Connected to MongoDB @ ${this.config.dbConnectionString}`);
     }

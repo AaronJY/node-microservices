@@ -1,4 +1,4 @@
-import { Gallery } from '../models/galleryModel';
+import { Gallery } from '../../data/models/galleryModel';
 
 export class NewGalleryApiModel {
     name: Gallery['name'];

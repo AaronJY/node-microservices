@@ -1,8 +1,8 @@
 import express, { Router, Request, Response, NextFunction } from 'express';
-import { Profile } from '../models/profileModel';
+import { Profile } from '../../data/models/profileModel';
 import { ObjectId } from 'mongodb';
-import { ProfileApiModel } from '../api-models/profileApiModel';
-import { ProfileRepo } from '../repos/profileRepo';
+import { ProfileApiModel } from '../models/profileApiModel';
+import { ProfileRepo } from '../../data/repos/profileRepo';
 
 const router: Router = express.Router();
 

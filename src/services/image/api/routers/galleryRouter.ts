@@ -1,10 +1,10 @@
 import express, { Response, Request, Router, NextFunction } from 'express';
-import GalleryModel, { Gallery } from '../models/galleryModel';
-import { GalleryApiModel } from '../api-models/galleryApiModel';
-import { NewGalleryApiModel } from '../api-models/newGalleryApiModel';
+import GalleryModel, { Gallery } from '../../data/models/galleryModel';
+import { NewGalleryApiModel } from '../models/newGalleryApiModel';
 import { ObjectID } from 'mongodb';
 import { Operation, applyPatch, Validator, validate, JsonPatchError } from 'fast-json-patch';
-import { GalleryRepo } from '../repos/galleryRepo';
+import { GalleryRepo } from '../../data/repos/galleryRepo';
+import { GalleryApiModel } from '../models/galleryApiModel';
 
 const router: Router = express.Router();
 

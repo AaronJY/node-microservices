@@ -1,5 +1,5 @@
 import GalleryModel, { Gallery } from '../models/galleryModel';
-import { GalleryNotFoundError } from '../errors/galleryNotFoundError';
+import { GalleryNotFoundError } from '../../errors/galleryNotFoundError';
 import { ObjectID } from 'mongodb';
 
 export class GalleryRepo {

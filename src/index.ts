@@ -1,7 +1,7 @@
-import { ProfileService } from './services/profile/profileService';
+import { ProfileService } from './services/profile';
 import * as profileServiceConfig from './services/profile/config/serviceConfig';
 import * as imageServiceConfig from './services/image/config/serviceConfig';
-import { ImageService } from './services/image/imageService';
+import { ImageService } from './services/image';
 
 const imageService: ImageService = new ImageService({
     apiHttpPort: parseInt(process.env.IMAGE_API_HTTP_PORT),
