@@ -1,14 +1,13 @@
 import express from 'express';
-import GalleryRouter from './api/routers/galleryRouter';
 import mongoose from 'mongoose';
-import errorResponseCodeHandler from '../../common/api/error-handlers/clientErrorHandler';
-import bodyparser from 'body-parser';
-import swaggerUI from 'swagger-ui-express';
-import swaggerDoc from './swagger.json';
 import { ServiceConfig } from './config/serviceConfig';
-import errorResponseHandler from '../../common/api/error-handlers/errorReportingHandler';
+import bodyparser from 'body-parser';
+import ProfileRouter from './api/routers/profileRouter';
+import { ConnectionManager } from './data/connections';
+import errorResponseCodeHandler from 'nodejs-ms-pkg-common/api/error-handlers/errorResponseCodeHandler'
+import errorResponseHandler from 'nodejs-ms-pkg-common/api/error-handlers/errorResponseHandler'
 
-export class ImageService {
+export class ProfileService {
     private api: express.Express;
     private config: ServiceConfig;
 
@@ -21,19 +20,18 @@ export class ImageService {
 
         this.api = express();
         this.api.use(bodyparser.json());
-        this.api.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
-        this.api.use('/api/v1/gallery', GalleryRouter);
+        this.api.use('/api/v1/profile', ProfileRouter);
         this.api.use(errorResponseCodeHandler);
         this.api.use(errorResponseHandler);
     }
 
-    async start(): Promise<void> {
+    async start(): Promise<unknown> {
         return this.connectToDatabase()
             .then(() => this.registerDbSchmas())
             .then(() => {
                 return new Promise((resolve) => {
                     this.api.listen(this.config.apiHttpPort, () => {
-                        console.log(`Image service now listening on port ${this.config.apiHttpPort}`);
+                        console.log(`Profile service now listening on on port ${this.config.apiHttpPort}`);
                         resolve();
                     });
                 });
@@ -41,7 +39,8 @@ export class ImageService {
     }
 
     private registerDbSchmas(): void {
-        require('../image/models/galleryModel');
+        require('../profile/models/addressModel');
+        require('../profile/models/profileModel');
 
         console.log('Registered DB schemas');
     }
@@ -51,6 +50,8 @@ export class ImageService {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
+
+        await ConnectionManager.connect(this.config.dbConnectionString);
 
         console.log(`Connected to MongoDB @ ${this.config.dbConnectionString}`);
     }

@@ -1,7 +1,7 @@
 import { Gallery } from '../../data/models/galleryModel';
 
 export class GalleryApiModel {
-    id: Gallery['id'];
+    id: Gallery['_id'];
     name: Gallery['name'];
     profileId: Gallery['profileId'];
     visibility: Gallery['visibility'];

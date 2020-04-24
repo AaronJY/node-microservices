@@ -1,4 +1,4 @@
-import { NotFoundError } from '../../../common/errors/notFoundError';
+import { NotFoundError } from 'nodejs-ms-pkg-common/errors/notFoundError';
 import { ObjectID } from 'mongodb';
 
 export class GalleryNotFoundError extends NotFoundError {

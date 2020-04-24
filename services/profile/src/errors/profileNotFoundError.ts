@@ -1,5 +1,5 @@
-import { NotFoundError } from '../../../common/errors/notFoundError';
 import { ObjectID } from 'mongodb';
+import {NotFoundError} from 'nodejs-ms-pkg-common/errors/notFoundError';
 
 export class ProfileNotFoundError extends NotFoundError {
     profileId: ObjectID;
@@ -7,7 +7,7 @@ export class ProfileNotFoundError extends NotFoundError {
     constructor(profileId: ObjectID, message?: string) {
         super(message);
 
-        this.profileId = profileId;
         this.name = 'ProfileNotFound';
+        this.profileId = profileId;
     }
 }

@@ -1,4 +1,3 @@
-
 # node-microservices
 This repo contains a demonstration of how to write micro services using:
 - TypeScript
@@ -17,6 +16,20 @@ This repo was intended as a playground for figuring out how I would write a micr
 2. Run `yarn install` (or `npm install`)
 3. Run `npm run build` to build the project
 4. To start all the services at once, run `npm run start`
+
+## Project layout
+Each microservice will follow the same folder structure:
+
+	api/
+		models/ - API models representing request bodies and responses
+		routers/ - Modules that handle API endpoint routing
+	config/ - 
+	data/
+		models/
+		repos/
+	errors/
+
+Each 
 
 ## Documentation
 - [Mongoose v5.9.9: Schemas](https://mongoosejs.com/docs/guide.html)
