@@ -38,7 +38,7 @@ export class ImageService {
     }
 
     private registerDbSchmas(): void {
-        require('../image/models/galleryModel');
+        require('./data/models/galleryModel');
 
         console.log('Registered DB schemas');
     }

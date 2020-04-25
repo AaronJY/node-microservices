@@ -1,5 +1,5 @@
-import { ImageService } from "./service";
-import { ServiceConfig } from "./config/serviceConfig";
+import { ImageService } from './service';
+import { ServiceConfig } from './config/serviceConfig';
 
 const config: ServiceConfig = {
     apiHttpPort: parseInt(process.env.API_HTTP_PORT),

@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import { ServiceConfig } from './config/serviceConfig';
 import bodyparser from 'body-parser';
 import ProfileRouter from './api/routers/profileRouter';
-import { ConnectionManager } from './data/connections';
 import errorResponseCodeHandler from 'nodejs-ms-pkg-common/api/error-handlers/errorResponseCodeHandler'
 import errorResponseHandler from 'nodejs-ms-pkg-common/api/error-handlers/errorResponseHandler'
 
@@ -39,8 +38,8 @@ export class ProfileService {
     }
 
     private registerDbSchmas(): void {
-        require('../profile/models/addressModel');
-        require('../profile/models/profileModel');
+        require('./data//models/addressModel');
+        require('./data/models/profileModel');
 
         console.log('Registered DB schemas');
     }
@@ -50,8 +49,6 @@ export class ProfileService {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
-
-        await ConnectionManager.connect(this.config.dbConnectionString);
 
         console.log(`Connected to MongoDB @ ${this.config.dbConnectionString}`);
     }

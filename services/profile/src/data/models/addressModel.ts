@@ -1,5 +1,4 @@
-import { Schema, Document } from 'mongoose';
-import { ConnectionManager } from '../connections';
+import { Schema, Document, model } from 'mongoose';
 
 export interface Address extends Document {
     profile: Address['_id'];
@@ -19,4 +18,4 @@ const AddressSchema: Schema = new Schema({
     country: { type: String, required: true }
 });
 
-export default ConnectionManager.getConnection().model<Address>('Address', AddressSchema);
+export default model<Address>('Address', AddressSchema);
