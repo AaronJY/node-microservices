@@ -1,6 +1,7 @@
 import GalleryModel, { Gallery } from '../models/galleryModel';
 import { GalleryNotFoundError } from '../../errors/galleryNotFoundError';
 import { ObjectID } from 'mongodb';
+import { GalleryAlreadyExistsError } from '../../errors/galleryAlreadyExistsError';
 
 export class GalleryRepo {
     static async getAll(): Promise<Gallery[]> {
@@ -18,6 +19,10 @@ export class GalleryRepo {
     }
 
     static async insert(document: Gallery): Promise<Gallery> {
+        if (await GalleryModel.exists({ name: document.name })) {
+            throw new GalleryAlreadyExistsError(`A gallery with the name "${document.name}" already exists.`);
+        }
+
         return await GalleryModel.create(document);
     }
 

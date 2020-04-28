@@ -8,6 +8,14 @@ import { GalleryApiModel } from '../models/galleryApiModel';
 
 const router: Router = express.Router();
 
+/**
+ * @api {get} / Get all galleries
+ * @apiName GetAllGalleries
+ * @apiGroup Gallery
+ *
+ * @apiUse GallerySuccessMultiple
+ * @apiUse GallerySuccessMultipleExample
+ */
 router.get('/', (req: Request, resp: Response, next: NextFunction) => {
     GalleryRepo.getAll()
         .then((galleries: Gallery[]) => galleries.map(model => new GalleryApiModel(model)))
@@ -15,6 +23,15 @@ router.get('/', (req: Request, resp: Response, next: NextFunction) => {
         .catch(err => next(err));
 });
 
+/**
+ * @api {get} /:id Gets a single gallery
+ * @apiName GetGalleryById
+ * @apiGroup Gallery
+ *
+ * @apiUse GallerySuccess
+ * @apiUse GallerySuccessExample
+ * @apiUse GalleryNotFoundError
+ */
 router.get('/:id', (req: Request, resp: Response, next: NextFunction) => {
     const id: ObjectID = new ObjectID(req.params.id);
 
