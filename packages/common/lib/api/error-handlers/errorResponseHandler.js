@@ -1,21 +1,17 @@
-import { Response, NextFunction, Request } from 'express';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export function errorResponseHandler(err: Error, req: Request, res: Response, next: NextFunction): void {
-    const responseObj: ErrorResponse = {
+function errorResponseHandler(err, req, res, next) {
+    const responseObj = {
         error: err.name,
         message: err.message
     };
-
     if (process.env.NODE_ENV === 'development') {
         responseObj.stack = err.stack;
     }
-
     res.contentType('application/json').send(responseObj);
 }
-
+exports.errorResponseHandler = errorResponseHandler;
 class ErrorResponse {
-    error: string;
-    message: string;
-    stack?: string
 }
+//# sourceMappingURL=errorResponseHandler.js.map

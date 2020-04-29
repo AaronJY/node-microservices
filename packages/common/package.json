@@ -1,19 +1,19 @@
 {
   "name": "nodejs-ms-pkg-common",
-  "version": "1.0.0",
-  "description": "",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "1.0.9",
+  "description": "Common functionality to be shared across NodeJS TypeScript microservices.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": ["lib/"],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc"
   },
   "author": "Aaron Yarborough",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.6",
     "@types/mongodb": "^3.5.8",
     "@types/mongoose": "^5.7.11",
-    "@types/fast-json-patch": "^1.1.5",
     "@typescript-eslint/eslint-plugin": "^2.29.0",
     "@typescript-eslint/parser": "^2.29.0",
     "eslint": "^6.8.0",
@@ -21,13 +21,13 @@
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
     "express": "^4.17.1",
     "mongodb": "^3.5.6",
     "mongoose": "^5.9.9",
-    "typescript": "^3.8.3",
     "fast-json-patch": "^3.0.0-1"
   }
 }

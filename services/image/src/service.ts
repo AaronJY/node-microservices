@@ -1,10 +1,9 @@
 import express from 'express';
 import GalleryRouter from './api/routers/galleryRouter';
 import mongoose from 'mongoose';
-import errorResponseCodeHandler from 'nodejs-ms-pkg-common/api/error-handlers/errorResponseCodeHandler';
-import errorResponseHandler from 'nodejs-ms-pkg-common/api/error-handlers/errorResponseHandler';
 import bodyparser from 'body-parser';
 import { ServiceConfig } from './config/serviceConfig';
+import { errorResponseCodeHandler, errorResponseHandler } from 'nodejs-ms-pkg-common';
 
 export class ImageService {
     private api: express.Express;
@@ -24,7 +23,10 @@ export class ImageService {
         this.api.use(errorResponseHandler);
     }
 
-    async start(): Promise<void> {
+    async start(): Promise<unknown> {
+        console.log('Starting...');
+        console.table(this.config);
+
         return this.connectToDatabase()
             .then(() => this.registerDbSchmas())
             .then(() => {
@@ -34,7 +36,8 @@ export class ImageService {
                         resolve();
                     });
                 });
-            });
+            })
+            .catch((err: Error) => console.error(err));
     }
 
     private registerDbSchmas(): void {

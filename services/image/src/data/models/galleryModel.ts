@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from 'mongoose';
 import { ObjectID } from 'mongodb';
-import { GalleryVisibility } from 'nodejs-ms-pkg-common/enums/galleryVisibility';
+
+import { GalleryVisibility } from 'nodejs-ms-pkg-common';
 
 export interface Gallery extends Document {
     name: string;
