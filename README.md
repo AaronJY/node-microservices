@@ -9,6 +9,8 @@ In the real world, each service under `src/services` would live in its own Git r
 ## Disclaimer
 This repo was intended as a playground for figuring out how I would write a micro service architecture using NodeJS/TypeScript. While you're more than welcome to use this as a reference, it'll never be considered as "done", and may change drastically from one commit to the next! 😁
 
+**Note:** I'm in the process of splitting these services out into separate repos, as well as moving common functionality into hosted packages. Building this project as-is (probably) won't work!
+
 ## Setting up
 **Note:** This repo uses Yarn 🐱 instead of npm. You should be able to use npm without any issues, though you may run into dependency issues as we use a yarn lock file instead of an npm lock file.
 
