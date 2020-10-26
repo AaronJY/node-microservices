@@ -28,7 +28,6 @@ export class ImageService {
         console.table(this.config);
 
         return this.connectToDatabase()
-            .then(() => this.registerDbSchmas())
             .then(() => {
                 return new Promise((resolve) => {
                     this.api.listen(this.config.apiHttpPort, () => {
@@ -38,12 +37,6 @@ export class ImageService {
                 });
             })
             .catch((err: Error) => console.error(err));
-    }
-
-    private registerDbSchmas(): void {
-        require('./data/models/galleryModel');
-
-        console.log('Registered DB schemas');
     }
 
     private async connectToDatabase(): Promise<void> {

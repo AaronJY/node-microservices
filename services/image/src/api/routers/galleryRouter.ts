@@ -28,7 +28,7 @@ router.post('/', (req: Request, resp: Response, next: NextFunction) => {
 
     const document = new GalleryModel({
         name: newGallery.name,
-        profileId: new ObjectID(),
+        profileId: newGallery.profileId,
         visibility: newGallery.visibility
     });
 
