@@ -23,7 +23,7 @@ router.get('/:id', (req: Request, resp: Response, next: NextFunction) => {
         .catch(err => next(err));
 });
 
-router.put('/', (req: Request, resp: Response, next: NextFunction) => {
+router.post('/', (req: Request, resp: Response, next: NextFunction) => {
     const newGallery: NewGalleryApiModel = req.body as NewGalleryApiModel;
 
     const document = new GalleryModel({

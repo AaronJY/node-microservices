@@ -29,6 +29,6 @@
   },
   "scripts": {
     "build": "tsc --build tsconfig.json",
-    "start": "node ."
+    "start": "node dist/"
   }
 }
